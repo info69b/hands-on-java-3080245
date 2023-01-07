@@ -71,15 +71,13 @@ public class DataSource {
   }
   public static void main(String[] args) {
     Customer customer = getCustomer("ojamblinbx@ycombinator.com");
+    System.out.println("User details:");
+    System.out.println("ID: " + customer.getId());
+    System.out.println("Name: " + customer.getName());
+    System.out.println("Username: " + customer.getUsername());
+    System.out.println("Password: " + customer.getPassword());
+    
     Account account = getAccount(customer.getAccountID());
-
-    System.out.println(customer.getName());
-    System.out.println(account.getBalance());
-    System.out.println(account.getId());
-    System.out.println(account.getType());
-
-    // customer.setPassword("mypassword");
-    System.out.println(customer.getPassword());
-    System.out.println(customer.getId());
+    System.out.println("Account balance is: " + account.getBalance());
   }
 }

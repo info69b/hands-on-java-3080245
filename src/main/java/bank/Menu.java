@@ -85,8 +85,6 @@ public class Menu {
           System.out.println("Invalid option. Please try again!");
           break;
       }
-
     }
   }
-
 }

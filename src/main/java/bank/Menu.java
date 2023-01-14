@@ -19,6 +19,7 @@ public class Menu {
     if (customer != null) {
 
       Account account = DataSource.getAccount(customer.getAccountID());
+      menu.showMenu(customer, account);
 
     }
 
@@ -41,6 +42,51 @@ public class Menu {
     }
 
     return customer;
+  }
+
+  private void showMenu(Customer customer, Account account) {
+    int selection = 0;
+
+    while (selection != 4 && customer.isAuthenticated()) {
+      System.out.println("=====================================================");
+      System.out.println("Please select the follwoing options:");
+      System.out.println("1: Deposit");
+      System.out.println("2: Withdraw");
+      System.out.println("3: Check balance");
+      System.out.println("4: Exit");
+      System.out.println("=====================================================");
+
+      selection = scanner.nextInt();
+      Double amount;
+
+      switch (selection) {
+        case 1:
+          System.out.println("How much would you like to deposit?");
+          amount = scanner.nextDouble();
+          account.deposit(amount);
+          break;
+
+        case 2:
+          System.out.println("How much would you like to withdraw?");
+          amount = scanner.nextDouble();
+          account.withdraw(amount);
+          break;
+
+        case 3:
+          System.out.println("Current balance is: " + account.getBalance());
+          break;
+
+        case 4:
+          Authenticator.logout(customer);
+          System.out.println("Thank you and goodbye!");
+          break;
+
+        default:
+          System.out.println("Invalid option. Please try again!");
+          break;
+      }
+
+    }
   }
 
 }

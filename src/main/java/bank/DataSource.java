@@ -7,12 +7,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class DataSource {
+  
+  // method that establish connection with the database
+
   public static Connection connect() {
     String db_file = "jdbc:sqlite:resources/bank.db";
     Connection connection = null;
     try {
       connection = DriverManager.getConnection(db_file);
-      System.out.println("We are connected!");
+      // System.out.println("Connecion with the database is established!");
     } catch(SQLException e) {
       e.printStackTrace();
     }
@@ -69,15 +72,19 @@ public class DataSource {
 
       return account;
   }
-  public static void main(String[] args) {
-    Customer customer = getCustomer("ojamblinbx@ycombinator.com");
-    System.out.println("User details:");
-    System.out.println("ID: " + customer.getId());
-    System.out.println("Name: " + customer.getName());
-    System.out.println("Username: " + customer.getUsername());
-    System.out.println("Password: " + customer.getPassword());
-    
-    Account account = getAccount(customer.getAccountID());
-    System.out.println("Account balance is: " + account.getBalance());
+
+  // Unility method that updates Account's balance
+
+  public static void updateAccountBalance(int accountId, Double amount) {
+    String sql = "update accounts set balance = ? where id = ?";
+    try(Connection connection = connect(); PreparedStatement statement = connection.prepareStatement(sql)) {
+      statement.setDouble(1, amount);
+      statement.setInt(2, accountId);
+
+      statement.executeUpdate();
+
+    } catch(SQLException e) {
+      e.printStackTrace();
+    }
   }
 }
